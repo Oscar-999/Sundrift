@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -18,7 +19,6 @@ const firebaseConfig = {
   messagingSenderId: "491210924756",
   appId: "1:491210924756:web:55bd1a4e53e81c02049141",
 };
-
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -78,3 +78,6 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
