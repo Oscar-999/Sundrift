@@ -1,21 +1,25 @@
-import { useState, useContext } from "react";
-import "./sign-in-form.styles.scss";
-import { UserContext } from "../../contexts/user.context";
+
+import './sign-in-form.styles.scss';
+import { useState, useContext } from 'react';
+
+import FormInput from '../form-input/form-input.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+import { UserContext } from '../../contexts/user.context';
+
 import {
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utill";
-import FormInput from "../form-input/FormInput";
-import Button from "../Button/Button";
+  signInWithGooglePopup,
+} from '../../utils/firebase/firebase.utils';
 
 const defaultFormFields = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
+
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+
   const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
@@ -24,8 +28,9 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    setCurrentUser(user);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -34,30 +39,22 @@ const SignInForm = () => {
         email,
         password
       );
-      setCurrentUser(user);
       resetFormFields();
+      setCurrentUser(user);
     } catch (error) {
       switch (error.code) {
-        case "auth/wrong-password":
-          alert("incorrect password for email");
+        case 'auth/wrong-password':
+          alert('incorrect password for email');
           break;
-        case "auth/user-not-found":
-          alert("no user associated with this email");
+        case 'auth/user-not-found':
+          alert('no user associated with this email');
           break;
         default:
           console.log(error);
       }
     }
-    // catch (error) {
-    //   if(error.code === "auth/wrong-password"){
-    //     alert('incorrect password for email')
-    //   }
-    //   if(error.code === 'auth/invalid-credential') {
-    //     alert('email or password incorrect')
-    //   }
-    //   console.log(error)
-    // }
   };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -65,31 +62,35 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <div className='sign-in-container'>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Email"
-          type="email"
+          label='Email'
+          type='email'
           required
           onChange={handleChange}
-          name="email"
+          name='email'
           value={email}
         />
 
         <FormInput
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           required
           onChange={handleChange}
-          name="password"
+          name='password'
           value={password}
         />
-        <div className="buttons-container">
-          <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
-            Google sign in
+        <div className='buttons-container'>
+          <Button type='submit'>Sign In</Button>
+          <Button
+            buttonType='google'
+            type='button'
+            onClick={signInWithGoogle}
+          >
+            Sign In With Google
           </Button>
         </div>
       </form>
