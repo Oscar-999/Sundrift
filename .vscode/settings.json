@@ -3,6 +3,8 @@
     "appspot",
     "firebaseapp",
     "firestore",
+    "signin",
+    "signup",
     "Sundrift",
     "sundriftdb",
     "utill",
