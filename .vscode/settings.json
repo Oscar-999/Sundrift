@@ -4,6 +4,7 @@
     "cartitems",
     "firebaseapp",
     "firestore",
+    "persistor",
     "signin",
     "signup",
     "Sundrift",
