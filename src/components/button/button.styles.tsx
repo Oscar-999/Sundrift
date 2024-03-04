@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { SpinnerContainer } from "../spinner/spinner.styles";
+import { SpinnerContainer } from "../spinner/spinner.styles.tsx";
 
 export const BaseButton = styled.button`
   min-width: 165px;
@@ -20,7 +20,7 @@ export const BaseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   &:hover {
     background-color: white;
     color: black;
