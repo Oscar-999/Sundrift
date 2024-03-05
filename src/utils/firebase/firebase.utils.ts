@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithRedirect,
@@ -10,7 +10,7 @@ import {
   onAuthStateChanged,
   NextOrObserver,
   User,
-} from "firebase/auth";
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -21,9 +21,9 @@ import {
   query,
   getDocs,
   QueryDocumentSnapshot,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
-import { Category } from "../../store/categories/category.types";
+import { Category } from '../../store/categories/category.types';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBwO8VG0IWomWUNYjMGL1VSwIRrYr8ASsM",
@@ -34,12 +34,13 @@ const firebaseConfig = {
   appId: "1:491210924756:web:55bd1a4e53e81c02049141",
 };
 
+
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 export const auth = getAuth();
@@ -67,11 +68,11 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   });
 
   await batch.commit();
-  console.log("done");
+  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
-  const collectionRef = collection(db, "categories");
+  const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
@@ -96,7 +97,7 @@ export const createUserDocumentFromAuth = async (
 ): Promise<void | QueryDocumentSnapshot<UserData>> => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
 
@@ -112,7 +113,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInformation,
       });
     } catch (error) {
-      console.log("error creating the user", error);
+      console.log('error creating the user', error);
     }
   }
 
